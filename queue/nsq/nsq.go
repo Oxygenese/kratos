@@ -8,15 +8,14 @@ import (
 )
 
 // NewNSQ nsq模式 只能监听一个channel
-func NewNSQ(addresses []string, prefix string, config *nsq.Config) (*NSQ, error) {
-	n := &NSQ{
+func NewNSQ(addresses []string, prefix string, config *nsq.Config) (nsq *NSQ, err error) {
+	nsq = &NSQ{
 		addresses:     addresses,
 		cfg:           config,
 		channelPrefix: prefix,
 	}
-	var err error
-	n.producer, err = n.newProducer()
-	return n, err
+	nsq.producer, err = nsq.newProducer()
+	return
 }
 
 func DefaultConfig() *nsq.Config {
@@ -69,12 +68,17 @@ func (e *NSQ) newConsumer(topic string, h nsq.Handler) (err error) {
 }
 
 // Append 消息入生产者
-func (e *NSQ) Append(message queue.Messager) error {
+func (e *NSQ) Append(message queue.Messager) (err error) {
 	rb, err := json.Marshal(message.GetValues())
 	if err != nil {
 		return err
 	}
-	return e.producer.Publish(message.GetStream(), rb)
+	err = e.producer.Publish(message.GetStream(), rb)
+	if err != nil {
+		fmt.Println("消息发布错误", err)
+		return err
+	}
+	return
 }
 
 // Register 监听消费者

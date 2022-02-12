@@ -104,6 +104,7 @@ func (a *App) Run() error {
 	}
 	wg.Wait()
 	if a.opts.queue != nil {
+
 		queue := a.opts.queue
 		go queue.Run()
 	}
