@@ -103,11 +103,7 @@ func (a *App) Run() error {
 		})
 	}
 	wg.Wait()
-	if a.opts.queue != nil {
 
-		queue := a.opts.queue
-		go queue.Run()
-	}
 	if a.opts.registrar != nil {
 		rctx, rcancel := context.WithTimeout(a.opts.ctx, a.opts.registrarTimeout)
 		defer rcancel()
