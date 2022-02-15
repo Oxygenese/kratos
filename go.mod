@@ -3,6 +3,7 @@ module github.com/go-kratos/kratos/v2
 go 1.16
 
 require (
+	github.com/bsm/redislock v0.7.2
 	github.com/fsnotify/fsnotify v1.5.1
 	github.com/go-kratos/aegis v0.1.1
 	github.com/go-playground/form/v4 v4.2.0
@@ -10,6 +11,10 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/gorilla/mux v1.8.0
 	github.com/imdario/mergo v0.3.12
+	github.com/json-iterator/go v1.1.12
+	github.com/kr/pretty v0.1.0 // indirect
+	github.com/nsqio/go-nsq v1.1.0
+	github.com/rabbitmq/amqp091-go v1.3.0
 	go.opentelemetry.io/otel v1.3.0
 	go.opentelemetry.io/otel/sdk v1.3.0
 	go.opentelemetry.io/otel/trace v1.3.0
@@ -17,5 +22,6 @@ require (
 	google.golang.org/genproto v0.0.0-20220126215142-9970aeb2e350
 	google.golang.org/grpc v1.44.0
 	google.golang.org/protobuf v1.27.1
+	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
