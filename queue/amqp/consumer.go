@@ -3,141 +3,105 @@ package amqp
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/queue"
 	amqp "github.com/rabbitmq/amqp091-go"
-	"log"
-	"sync"
 )
-
-type registeredConsumer struct {
-	fn queue.ConsumerFunc
-	id string
-}
 
 type Consumer struct {
 	conn      *amqp.Connection
-	ch        *amqp.Channel
-	Errors    chan error
-	streams   []string
-	consumers map[string]registeredConsumer
-	queue     chan *queue.Message
-	wg        *sync.WaitGroup
-	opts      *ConsumerOptions
+	channel   *amqp.Channel
+	opts      *ExchangeOptions
+	done      chan error
+	queue     []string
+	consumers map[string]queue.ConsumerFunc
 }
 
-func NewConsumerWithOptions(uri string, options *ConsumerOptions) *Consumer {
-	conn, _ := amqp.Dial(uri)
-	channel, _ := conn.Channel()
-	if options == nil {
-		options = defaultConsumerOptions
-	}
-	c := &Consumer{
-		Errors:    make(chan error),
-		conn:      conn,
-		ch:        channel,
-		streams:   make([]string, 0),
-		consumers: make(map[string]registeredConsumer, 0),
-		opts:      options,
-	}
-	_ = c.ch.ExchangeDeclare(
-		c.opts.exchange,     // name of the exchange
-		amqp.ExchangeDirect, // type
-		c.opts.durable,      // durable
-		c.opts.autoDelete,   // delete when complete
-		false,               // internal
-		false,               // noWait
-		nil,                 // arguments
-	)
-	return c
-}
-
-func NewConsumer(uri string) (consumer *Consumer) {
+func NewConsumer(uri string) *Consumer {
 	return NewConsumerWithOptions(uri, nil)
 }
 
-func (c *Consumer) Shutdown() error {
-	// will close() the deliveries channel
-	if err := c.ch.Cancel("", true); err != nil {
-		return fmt.Errorf("consumer cancel failed: %s", err)
+func NewConsumerWithOptions(uri string, options *ExchangeOptions) *Consumer {
+	var err error
+	if options == nil {
+		options = defaultExchangeOptions
 	}
-	if err := c.conn.Close(); err != nil {
-		return fmt.Errorf("AMQP connection close error: %s", err)
-	}
-	defer log.Printf("AMQP shutdown OK")
-	// wait for handle() to exit
-	return <-c.Errors
-
-}
-
-func (c *Consumer) Register(queueName string, fn queue.ConsumerFunc) {
-	c.streams = append(c.streams, queueName)
-	c.consumers[queueName] = registeredConsumer{
-		fn: fn,
-		id: "",
-	}
-}
-
-// Run 消费者worker执行
-func (c *Consumer) Run() {
-	err := c.declareQueue()
+	conn, err := amqp.Dial(uri)
 	if err != nil {
-		log.Printf("amqp run err : %s ", err)
-		return
+		log.Errorf("consumer err %s:", err)
+		return nil
 	}
-	delivery, err := c.ch.Consume(
-		c.streams[0],
-		"",
-		false,
-		false,
-		false,
-		false,
-		nil,
+	channel, err := conn.Channel()
+	if err != nil {
+		return nil
+	}
+
+	return &Consumer{
+		conn:      conn,
+		channel:   channel,
+		opts:      options,
+		consumers: make(map[string]queue.ConsumerFunc, 0),
+	}
+}
+
+func (c *Consumer) Run() {
+	q, err := c.channel.QueueDeclare(
+		c.queue[0],        // name of the queue
+		c.opts.durable,    // durable
+		c.opts.autoDelete, // delete when unused
+		false,             // exclusive
+		c.opts.noWait,     // noWait
+		nil,               // arguments
 	)
 	if err != nil {
-		c.Errors <- err
+		fmt.Printf("Queue Declare: %s\n", err)
 	}
-	for d := range delivery {
-		fmt.Println(d)
+	if err = c.channel.QueueBind(
+		q.Name,              // name of the queue
+		q.Name,              // bindingKey
+		c.opts.exchangeName, // sourceExchange
+		false,               // noWait
+		nil,                 // arguments
+	); err != nil {
+		fmt.Printf("Queue Bind: %s\n", err)
 	}
-}
-
-func (c *Consumer) declareQueue() (err error) {
-	for _, v := range c.streams {
-		q, err := c.ch.QueueDeclare(
-			v,     // name of the queue
-			true,  // durable
-			false, // delete when unused
-			false, // exclusive
-			false, // noWait
-			nil,   // arguments
-		)
-		if err != nil {
-			c.Errors <- err
-		}
-		err = c.ch.QueueBind(
-			q.Name,
-			"",
-			c.opts.exchange,
-			c.opts.noWait,
-			nil,
-		)
-		if err != nil {
-			c.Errors <- err
-		}
-	}
-	return err
-}
-
-func (c *Consumer) enqueue(stream string, delivery amqp.Delivery) {
-	value := make(map[string]interface{})
-	err := json.Unmarshal(delivery.Body, &value)
+	deliveries, err := c.channel.Consume(
+		q.Name, // name
+		"",     // consumerTag,
+		false,  // noAck
+		false,  // exclusive
+		false,  // noLocal
+		false,  // noWait
+		nil,    // arguments
+	)
 	if err != nil {
-		log.Printf(err.Error())
+		fmt.Printf("Queue Consume: %s\n", err)
 	}
-	m := &queue.Message{
-		ID:     delivery.MessageId,
-		Stream: stream,
-		Values: value,
+
+	go c.process(deliveries, c.done)
+
+}
+
+func (c *Consumer) Register(queue string, consumerFunc queue.ConsumerFunc) {
+	c.queue = append(c.queue, queue)
+	c.consumers[queue] = consumerFunc
+}
+
+func (c *Consumer) process(deliveries <-chan amqp.Delivery, done chan error) {
+	for d := range deliveries {
+		value := make(map[string]interface{})
+		err := json.Unmarshal(d.Body, &value)
+		if err != nil {
+			return
+		}
+		m := &queue.Message{
+			ID:     d.MessageId,
+			Stream: d.RoutingKey,
+			Values: value,
+		}
+		go c.consumers[c.queue[0]](m)
+		d.Ack(false)
 	}
-	c.queue <- m
+	log.Info("handle: deliveries channel closed")
+	done <- nil
 }

@@ -7,9 +7,17 @@ import (
 )
 
 func NewAmqp(uri, exchange string) queue.AdapterQueue {
+	opts := &ExchangeOptions{
+		exchangeName: exchange,
+		exchangeType: "topic",
+		durable:      true,
+		autoDelete:   false,
+		internal:     false,
+		noWait:       false,
+	}
 	return &Amqp{
-		producer: NewProducer(uri, exchange),
-		consumer: NewConsumer(uri),
+		producer: NewProducerWithOptions(uri, opts),
+		consumer: NewConsumerWithOptions(uri, opts),
 	}
 }
 
@@ -44,5 +52,5 @@ func (a Amqp) Run() {
 }
 
 func (a Amqp) Shutdown() {
-	a.consumer.Shutdown()
+	//a.consumer.Shutdown()
 }
