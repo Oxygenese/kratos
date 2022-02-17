@@ -9,7 +9,7 @@ import (
 func NewAmqp(uri, exchange string) queue.AdapterQueue {
 	return &Amqp{
 		producer: NewProducer(uri, exchange),
-		consumer: NewConsumer(uri, exchange),
+		consumer: NewConsumer(uri),
 	}
 }
 

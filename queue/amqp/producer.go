@@ -41,6 +41,7 @@ func (e Producer) Publish(queue string, body []byte) (err error) {
 		nil,
 	)
 	if err != nil {
+		log.Printf("amqp queue declare err : %s", err)
 		return err
 	}
 	err = e.ch.Publish(
@@ -50,7 +51,7 @@ func (e Producer) Publish(queue string, body []byte) (err error) {
 		false,
 		amqp.Publishing{
 			ContentType:  "text/plain",
-			DeliveryMode: amqp.Persistent,
+			DeliveryMode: amqp.Transient,
 			Body:         body,
 		},
 	)

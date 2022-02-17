@@ -2,6 +2,7 @@ package kratos
 
 import (
 	"context"
+	"github.com/go-kratos/kratos/v2/queue"
 	"net/url"
 	"os"
 	"time"
@@ -30,6 +31,7 @@ type options struct {
 	registrarTimeout time.Duration
 	stopTimeout      time.Duration
 	servers          []transport.Server
+	queue            queue.AdapterQueue
 }
 
 // ID with service id.
@@ -92,4 +94,10 @@ func RegistrarTimeout(t time.Duration) Option {
 // StopTimeout with app stop timeout.
 func StopTimeout(t time.Duration) Option {
 	return func(o *options) { o.stopTimeout = t }
+}
+
+func Queue(queue queue.AdapterQueue) Option {
+	return func(o *options) {
+		o.queue = queue
+	}
 }

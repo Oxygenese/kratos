@@ -104,6 +104,12 @@ func (a *App) Run() error {
 	}
 	wg.Wait()
 
+	if a.opts.queue != nil {
+		q := a.opts.queue
+		go q.Run()
+		a.opts.logger.Infof("queue worker %s started \n", q.String())
+	}
+
 	if a.opts.registrar != nil {
 		rctx, rcancel := context.WithTimeout(a.opts.ctx, a.opts.registrarTimeout)
 		defer rcancel()

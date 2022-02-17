@@ -6,6 +6,7 @@ import (
 	"github.com/go-kratos/kratos/v2/queue"
 	amqp "github.com/rabbitmq/amqp091-go"
 	"log"
+	"sync"
 )
 
 type registeredConsumer struct {
@@ -19,31 +20,39 @@ type Consumer struct {
 	Errors    chan error
 	streams   []string
 	consumers map[string]registeredConsumer
-	exchange  string
 	queue     chan *queue.Message
+	wg        *sync.WaitGroup
+	opts      *ConsumerOptions
 }
 
-func NewConsumer(uri string, exchange string) (consumer *Consumer) {
+func NewConsumerWithOptions(uri string, options *ConsumerOptions) *Consumer {
 	conn, _ := amqp.Dial(uri)
 	channel, _ := conn.Channel()
+	if options == nil {
+		options = defaultConsumerOptions
+	}
 	c := &Consumer{
 		Errors:    make(chan error),
 		conn:      conn,
 		ch:        channel,
 		streams:   make([]string, 0),
 		consumers: make(map[string]registeredConsumer, 0),
-		exchange:  exchange,
+		opts:      options,
 	}
 	_ = c.ch.ExchangeDeclare(
-		exchange,           // name of the exchange
-		amqp.ExchangeTopic, // type
-		true,               // durable
-		false,              // delete when complete
-		false,              // internal
-		false,              // noWait
-		nil,                // arguments
+		c.opts.exchange,     // name of the exchange
+		amqp.ExchangeDirect, // type
+		c.opts.durable,      // durable
+		c.opts.autoDelete,   // delete when complete
+		false,               // internal
+		false,               // noWait
+		nil,                 // arguments
 	)
 	return c
+}
+
+func NewConsumer(uri string) (consumer *Consumer) {
+	return NewConsumerWithOptions(uri, nil)
 }
 
 func (c *Consumer) Shutdown() error {
@@ -61,7 +70,6 @@ func (c *Consumer) Shutdown() error {
 }
 
 func (c *Consumer) Register(queueName string, fn queue.ConsumerFunc) {
-	fmt.Println("注册函数")
 	c.streams = append(c.streams, queueName)
 	c.consumers[queueName] = registeredConsumer{
 		fn: fn,
@@ -76,27 +84,20 @@ func (c *Consumer) Run() {
 		log.Printf("amqp run err : %s ", err)
 		return
 	}
-	for _, name := range c.streams {
-		delivery, err := c.ch.Consume(
-			name,
-			"",
-			false,
-			false,
-			false,
-			false,
-			nil,
-		)
-		if err != nil {
-			c.Errors <- err
-		}
-		select {
-		case e := <-delivery:
-			c.enqueue(name, e)
-		case e := <-c.Errors:
-			log.Printf("consumer err : %s", e)
-		default:
-			fmt.Println("默认处理")
-		}
+	delivery, err := c.ch.Consume(
+		c.streams[0],
+		"",
+		false,
+		false,
+		false,
+		false,
+		nil,
+	)
+	if err != nil {
+		c.Errors <- err
+	}
+	for d := range delivery {
+		fmt.Println(d)
 	}
 }
 
@@ -116,8 +117,8 @@ func (c *Consumer) declareQueue() (err error) {
 		err = c.ch.QueueBind(
 			q.Name,
 			"",
-			c.exchange,
-			false,
+			c.opts.exchange,
+			c.opts.noWait,
 			nil,
 		)
 		if err != nil {
@@ -139,5 +140,4 @@ func (c *Consumer) enqueue(stream string, delivery amqp.Delivery) {
 		Values: value,
 	}
 	c.queue <- m
-	fmt.Println("注入队列", len(c.queue))
 }
