@@ -35,7 +35,6 @@ func NewConsumerWithOptions(uri string, options *ExchangeOptions) *Consumer {
 	if err != nil {
 		return nil
 	}
-
 	return &Consumer{
 		conn:      conn,
 		channel:   channel,
@@ -45,41 +44,51 @@ func NewConsumerWithOptions(uri string, options *ExchangeOptions) *Consumer {
 }
 
 func (c *Consumer) Run() {
-	q, err := c.channel.QueueDeclare(
-		c.queue[0],        // name of the queue
-		c.opts.durable,    // durable
-		c.opts.autoDelete, // delete when unused
-		false,             // exclusive
-		c.opts.noWait,     // noWait
-		nil,               // arguments
-	)
-	if err != nil {
-		fmt.Printf("Queue Declare: %s\n", err)
-	}
-	if err = c.channel.QueueBind(
-		q.Name,              // name of the queue
-		q.Name,              // bindingKey
-		c.opts.exchangeName, // sourceExchange
-		false,               // noWait
-		nil,                 // arguments
-	); err != nil {
-		fmt.Printf("Queue Bind: %s\n", err)
-	}
-	deliveries, err := c.channel.Consume(
-		q.Name, // name
-		"",     // consumerTag,
-		false,  // noAck
-		false,  // exclusive
-		false,  // noLocal
-		false,  // noWait
-		nil,    // arguments
-	)
-	if err != nil {
-		fmt.Printf("Queue Consume: %s\n", err)
-	}
+	c.queueDeclareAndBind()
+	c.listen()
+}
 
-	go c.process(deliveries, c.done)
+func (c *Consumer) listen() {
+	for _, key := range c.queue {
+		deliveries, err := c.channel.Consume(
+			key,   // name
+			"",    // consumerTag,
+			false, // noAck
+			false, // exclusive
+			false, // noLocal
+			false, // noWait
+			nil,   // arguments
+		)
+		if err != nil {
+			fmt.Printf("Queue Consume: %s\n", err)
+		}
+		go c.process(deliveries, key, c.done)
+	}
+}
 
+func (c *Consumer) queueDeclareAndBind() {
+	for _, v := range c.queue {
+		q, err := c.channel.QueueDeclare(
+			v,
+			c.opts.durable,
+			c.opts.autoDelete,
+			false,
+			c.opts.noWait,
+			nil,
+		)
+		if err != nil {
+			fmt.Printf("Queue Declare: %s\n", err)
+		}
+		if err = c.channel.QueueBind(
+			q.Name,              // name of the queue
+			q.Name,              // bindingKey
+			c.opts.exchangeName, // sourceExchange
+			false,               // noWait
+			nil,                 // arguments
+		); err != nil {
+			fmt.Printf("Queue Bind: %s\n", err)
+		}
+	}
 }
 
 func (c *Consumer) Register(queue string, consumerFunc queue.ConsumerFunc) {
@@ -87,7 +96,7 @@ func (c *Consumer) Register(queue string, consumerFunc queue.ConsumerFunc) {
 	c.consumers[queue] = consumerFunc
 }
 
-func (c *Consumer) process(deliveries <-chan amqp.Delivery, done chan error) {
+func (c *Consumer) process(deliveries <-chan amqp.Delivery, key string, done chan error) {
 	for d := range deliveries {
 		value := make(map[string]interface{})
 		err := json.Unmarshal(d.Body, &value)
@@ -95,11 +104,13 @@ func (c *Consumer) process(deliveries <-chan amqp.Delivery, done chan error) {
 			return
 		}
 		m := &queue.Message{
-			ID:     d.MessageId,
-			Stream: d.RoutingKey,
-			Values: value,
+			RoutingKey: d.RoutingKey,
+			Values:     value,
 		}
-		go c.consumers[c.queue[0]](m)
+		err = c.consumers[key](m)
+		if err != nil {
+			c.done <- err
+		}
 		d.Ack(false)
 	}
 	log.Info("handle: deliveries channel closed")

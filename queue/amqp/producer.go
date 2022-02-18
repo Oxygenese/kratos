@@ -6,9 +6,9 @@ import (
 )
 
 type Producer struct {
-	conn *amqp.Connection
-	ch   *amqp.Channel
-	opts *ExchangeOptions
+	conn    *amqp.Connection
+	channel *amqp.Channel
+	opts    *ExchangeOptions
 }
 
 func NewProducer(uri string) *Producer {
@@ -44,9 +44,9 @@ func NewProducerWithOptions(uri string, opts *ExchangeOptions) *Producer {
 	}
 
 	prod := &Producer{
-		conn: conn,
-		ch:   ch,
-		opts: opts,
+		conn:    conn,
+		channel: ch,
+		opts:    opts,
 	}
 	return prod
 }
@@ -59,7 +59,7 @@ func (e *Producer) Publish(key string, body []byte) (err error) {
 	//confirms := e.ch.NotifyPublish(make(chan amqp.Confirmation, 1))
 	//log.Printf("declared Exchange, publishing %dB body (%q)", len(body), body)
 	//defer confirmOne(confirms)
-	err = e.ch.Publish(
+	err = e.channel.Publish(
 		e.opts.exchangeName,
 		key,
 		false,

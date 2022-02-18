@@ -1,9 +1,5 @@
 package queue
 
-const (
-	PrefixKey = "__host"
-)
-
 type AdapterQueue interface {
 	String() string
 	Append(message Messager) error
@@ -13,14 +9,10 @@ type AdapterQueue interface {
 }
 
 type Messager interface {
-	SetID(string)
-	SetStream(string)
+	GetRoutingKey() string
+	SetRoutingKey(string)
 	SetValues(map[string]interface{})
-	GetID() string
-	GetStream() string
 	GetValues() map[string]interface{}
-	GetPrefix() string
-	SetPrefix(string)
 }
 
 type ConsumerFunc func(Messager) error

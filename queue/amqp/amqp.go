@@ -35,7 +35,7 @@ func (a Amqp) Append(message queue.Messager) (err error) {
 	if err != nil {
 		return err
 	}
-	err = a.producer.Publish(message.GetStream(), rb)
+	err = a.producer.Publish(message.GetRoutingKey(), rb)
 	if err != nil {
 		fmt.Println("消息发布错误", err)
 		return err
