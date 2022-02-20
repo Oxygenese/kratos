@@ -13,7 +13,6 @@ type Consumer struct {
 	channel   *amqp.Channel
 	opts      *ExchangeOptions
 	done      chan error
-	queue     []string
 	consumers map[string]queue.ConsumerFunc
 }
 
@@ -49,7 +48,7 @@ func (c *Consumer) Run() {
 }
 
 func (c *Consumer) listen() {
-	for _, key := range c.queue {
+	for key, _ := range c.consumers {
 		deliveries, err := c.channel.Consume(
 			key,   // name
 			"",    // consumerTag,
@@ -67,9 +66,9 @@ func (c *Consumer) listen() {
 }
 
 func (c *Consumer) queueDeclareAndBind() {
-	for _, v := range c.queue {
+	for key, _ := range c.consumers {
 		q, err := c.channel.QueueDeclare(
-			v,
+			key,
 			c.opts.durable,
 			c.opts.autoDelete,
 			false,
@@ -92,7 +91,6 @@ func (c *Consumer) queueDeclareAndBind() {
 }
 
 func (c *Consumer) Register(queue string, consumerFunc queue.ConsumerFunc) {
-	c.queue = append(c.queue, queue)
 	c.consumers[queue] = consumerFunc
 }
 
