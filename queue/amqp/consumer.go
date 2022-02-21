@@ -45,6 +45,7 @@ func NewConsumerWithOptions(uri string, options *ExchangeOptions) *Consumer {
 func (c *Consumer) Run() {
 	c.queueDeclareAndBind()
 	c.listen()
+	log.Infof("[AMQP] rabbitmq consumer started.\n")
 }
 
 func (c *Consumer) listen() {

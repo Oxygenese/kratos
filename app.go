@@ -107,7 +107,6 @@ func (a *App) Run() error {
 	if a.opts.queue != nil {
 		q := a.opts.queue
 		go q.Run()
-		a.opts.logger.Infof("queue worker %s started \n", q.String())
 	}
 
 	if a.opts.registrar != nil {
