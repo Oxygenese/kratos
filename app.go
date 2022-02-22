@@ -109,6 +109,12 @@ func (a *App) Run() error {
 		go q.Run()
 	}
 
+	if a.opts.job != nil {
+		j := a.opts.job
+		j.Start()
+		log.Infof("[Cron]scheduled task started!")
+	}
+
 	if a.opts.registrar != nil {
 		rctx, rcancel := context.WithTimeout(a.opts.ctx, a.opts.registrarTimeout)
 		defer rcancel()

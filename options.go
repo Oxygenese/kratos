@@ -2,6 +2,7 @@ package kratos
 
 import (
 	"context"
+	"github.com/go-kratos/kratos/v2/job"
 	"github.com/go-kratos/kratos/v2/queue"
 	"net/url"
 	"os"
@@ -32,6 +33,7 @@ type options struct {
 	stopTimeout      time.Duration
 	servers          []transport.Server
 	queue            queue.AdapterQueue
+	job              job.Job
 }
 
 // ID with service id.
@@ -99,5 +101,11 @@ func StopTimeout(t time.Duration) Option {
 func Queue(queue queue.AdapterQueue) Option {
 	return func(o *options) {
 		o.queue = queue
+	}
+}
+
+func Job(job job.Job) Option {
+	return func(o *options) {
+		o.job = job
 	}
 }

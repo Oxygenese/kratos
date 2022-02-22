@@ -12,6 +12,7 @@ require (
 	github.com/imdario/mergo v0.3.12
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/rabbitmq/amqp091-go v1.3.0
+	github.com/robfig/cron v1.2.0
 	go.opentelemetry.io/otel v1.3.0
 	go.opentelemetry.io/otel/sdk v1.3.0
 	go.opentelemetry.io/otel/trace v1.3.0
