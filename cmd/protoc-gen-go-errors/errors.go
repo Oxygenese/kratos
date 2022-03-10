@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/go-kratos/kratos/cmd/protoc-gen-go-errors/v2/errors"
+	"github.com/mars-projects/kratos/cmd/protoc-gen-go-errors/v2/errors"
 	"google.golang.org/protobuf/compiler/protogen"
 	"google.golang.org/protobuf/proto"
 )
