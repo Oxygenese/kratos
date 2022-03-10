@@ -7,8 +7,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/projects-mars/kratos/v2/log"
-	"github.com/projects-mars/kratos/v2/transport"
+	"github.com/mars-projects/kratos/v2/log"
+	"github.com/mars-projects/kratos/v2/transport"
 	"go.opentelemetry.io/otel/propagation"
 	tracesdk "go.opentelemetry.io/otel/sdk/trace"
 	"go.opentelemetry.io/otel/trace"
@@ -111,7 +111,7 @@ func TestServer(t *testing.T) {
 		)
 		childSpanID = SpanID()(ctx).(string)
 		childTraceID = TraceID()(ctx).(string)
-		return req.(string) + "https://projects-mars.dev", nil
+		return req.(string) + "https://mars-projects.dev", nil
 	}
 
 	var ctx context.Context
@@ -183,7 +183,7 @@ func TestClient(t *testing.T) {
 		)
 		childSpanID = SpanID()(ctx).(string)
 		childTraceID = TraceID()(ctx).(string)
-		return req.(string) + "https://projects-mars.dev", nil
+		return req.(string) + "https://mars-projects.dev", nil
 	}
 
 	var ctx context.Context

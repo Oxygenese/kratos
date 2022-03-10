@@ -4,9 +4,9 @@ import (
 	"context"
 	"runtime"
 
-	"github.com/projects-mars/kratos/v2/errors"
-	"github.com/projects-mars/kratos/v2/log"
-	"github.com/projects-mars/kratos/v2/middleware"
+	"github.com/mars-projects/kratos/v2/errors"
+	"github.com/mars-projects/kratos/v2/log"
+	"github.com/mars-projects/kratos/v2/middleware"
 )
 
 // ErrUnknownRequest is unknown request error.

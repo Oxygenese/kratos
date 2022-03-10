@@ -3,8 +3,8 @@ package tracing
 import (
 	"context"
 
-	"github.com/projects-mars/kratos/v2"
-	"github.com/projects-mars/kratos/v2/metadata"
+	"github.com/mars-projects/kratos/v2"
+	"github.com/mars-projects/kratos/v2/metadata"
 	"go.opentelemetry.io/otel/propagation"
 )
 

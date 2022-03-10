@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/projects-mars/kratos/v2/middleware"
-	"github.com/projects-mars/kratos/v2/transport"
+	"github.com/mars-projects/kratos/v2/middleware"
+	"github.com/mars-projects/kratos/v2/transport"
 )
 
 var _ transport.Transporter = &Transport{}

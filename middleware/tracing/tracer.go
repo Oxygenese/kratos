@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/projects-mars/kratos/v2/errors"
+	"github.com/mars-projects/kratos/v2/errors"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/codes"

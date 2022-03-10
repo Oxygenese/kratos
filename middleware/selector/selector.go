@@ -5,8 +5,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/projects-mars/kratos/v2/middleware"
-	"github.com/projects-mars/kratos/v2/transport"
+	"github.com/mars-projects/kratos/v2/middleware"
+	"github.com/mars-projects/kratos/v2/transport"
 )
 
 type (
