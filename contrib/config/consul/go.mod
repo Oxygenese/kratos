@@ -1,10 +1,11 @@
-module github.com/go-kratos/kratos/contrib/config/consul/v2
+module github.com/mars-projects/kratos/contrib/config/consul/v2
 
 go 1.15
 
 require (
-	github.com/go-kratos/kratos/v2 v2.1.5
+	github.com/go-kratos/kratos/v2 v2.2.0 // indirect
 	github.com/hashicorp/consul/api v1.10.0
+	github.com/mars-projects/kratos/v2 v2.1.5
 )
 
-replace github.com/go-kratos/kratos/v2 => ../../../
+replace github.com/mars-projects/kratos/v2 => ../../../
