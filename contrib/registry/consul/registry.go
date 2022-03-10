@@ -7,7 +7,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/go-kratos/kratos/v2/registry"
+	"github.com/mars-projects/kratos/v2/registry"
 
 	"github.com/hashicorp/consul/api"
 )

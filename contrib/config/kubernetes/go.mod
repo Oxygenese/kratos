@@ -3,7 +3,6 @@ module github.com/mars-projects/kratos/contrib/config/kubernetes/v2
 go 1.16
 
 require (
-	github.com/go-kratos/kratos/v2 v2.2.0 // indirect
 	github.com/mars-projects/kratos/v2 v2.1.5
 	k8s.io/api v0.23.3
 	k8s.io/apimachinery v0.23.3
