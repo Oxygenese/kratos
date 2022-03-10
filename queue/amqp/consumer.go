@@ -3,8 +3,8 @@ package amqp
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/projects-mars/kratos/v2/log"
-	"github.com/projects-mars/kratos/v2/queue"
+	"github.com/mars-projects/kratos/v2/log"
+	"github.com/mars-projects/kratos/v2/queue"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 

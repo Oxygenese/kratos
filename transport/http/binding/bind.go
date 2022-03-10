@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/projects-mars/kratos/v2/encoding"
-	"github.com/projects-mars/kratos/v2/encoding/form"
+	"github.com/mars-projects/kratos/v2/encoding"
+	"github.com/mars-projects/kratos/v2/encoding/form"
 )
 
 // BindQuery bind vars parameters to target.

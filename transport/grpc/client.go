@@ -6,16 +6,16 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/projects-mars/kratos/v2/log"
-	"github.com/projects-mars/kratos/v2/middleware"
-	"github.com/projects-mars/kratos/v2/registry"
-	"github.com/projects-mars/kratos/v2/selector"
-	"github.com/projects-mars/kratos/v2/selector/wrr"
-	"github.com/projects-mars/kratos/v2/transport"
-	"github.com/projects-mars/kratos/v2/transport/grpc/resolver/discovery"
+	"github.com/mars-projects/kratos/v2/log"
+	"github.com/mars-projects/kratos/v2/middleware"
+	"github.com/mars-projects/kratos/v2/registry"
+	"github.com/mars-projects/kratos/v2/selector"
+	"github.com/mars-projects/kratos/v2/selector/wrr"
+	"github.com/mars-projects/kratos/v2/transport"
+	"github.com/mars-projects/kratos/v2/transport/grpc/resolver/discovery"
 
 	// init resolver
-	_ "github.com/projects-mars/kratos/v2/transport/grpc/resolver/direct"
+	_ "github.com/mars-projects/kratos/v2/transport/grpc/resolver/direct"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"

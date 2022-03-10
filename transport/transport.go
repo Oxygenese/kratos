@@ -5,11 +5,11 @@ import (
 	"net/url"
 
 	// init encoding
-	_ "github.com/projects-mars/kratos/v2/encoding/form"
-	_ "github.com/projects-mars/kratos/v2/encoding/json"
-	_ "github.com/projects-mars/kratos/v2/encoding/proto"
-	_ "github.com/projects-mars/kratos/v2/encoding/xml"
-	_ "github.com/projects-mars/kratos/v2/encoding/yaml"
+	_ "github.com/mars-projects/kratos/v2/encoding/form"
+	_ "github.com/mars-projects/kratos/v2/encoding/json"
+	_ "github.com/mars-projects/kratos/v2/encoding/proto"
+	_ "github.com/mars-projects/kratos/v2/encoding/xml"
+	_ "github.com/mars-projects/kratos/v2/encoding/yaml"
 )
 
 // Server is transport server.

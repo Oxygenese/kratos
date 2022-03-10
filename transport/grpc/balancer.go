@@ -3,12 +3,12 @@ package grpc
 import (
 	"sync"
 
-	"github.com/projects-mars/kratos/v2/registry"
-	"github.com/projects-mars/kratos/v2/selector"
-	"github.com/projects-mars/kratos/v2/selector/p2c"
-	"github.com/projects-mars/kratos/v2/selector/random"
-	"github.com/projects-mars/kratos/v2/selector/wrr"
-	"github.com/projects-mars/kratos/v2/transport"
+	"github.com/mars-projects/kratos/v2/registry"
+	"github.com/mars-projects/kratos/v2/selector"
+	"github.com/mars-projects/kratos/v2/selector/p2c"
+	"github.com/mars-projects/kratos/v2/selector/random"
+	"github.com/mars-projects/kratos/v2/selector/wrr"
+	"github.com/mars-projects/kratos/v2/transport"
 
 	gBalancer "google.golang.org/grpc/balancer"
 	"google.golang.org/grpc/balancer/base"

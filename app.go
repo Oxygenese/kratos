@@ -9,9 +9,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/projects-mars/kratos/v2/log"
-	"github.com/projects-mars/kratos/v2/registry"
-	"github.com/projects-mars/kratos/v2/transport"
+	"github.com/mars-projects/kratos/v2/log"
+	"github.com/mars-projects/kratos/v2/registry"
+	"github.com/mars-projects/kratos/v2/transport"
 
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"

@@ -5,7 +5,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/projects-mars/kratos/v2/selector"
+	"github.com/mars-projects/kratos/v2/selector"
 )
 
 const (

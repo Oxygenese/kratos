@@ -1,4 +1,4 @@
-module github.com/projects-mars/kratos/v2
+module github.com/mars-projects/kratos/v2
 
 go 1.16
 

@@ -3,7 +3,7 @@ package filter
 import (
 	"context"
 
-	"github.com/projects-mars/kratos/v2/selector"
+	"github.com/mars-projects/kratos/v2/selector"
 )
 
 // Version is version filter.

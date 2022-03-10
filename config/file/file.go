@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/projects-mars/kratos/v2/config"
+	"github.com/mars-projects/kratos/v2/config"
 )
 
 var _ config.Source = (*file)(nil)

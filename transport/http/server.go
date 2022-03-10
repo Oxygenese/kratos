@@ -9,12 +9,12 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/projects-mars/kratos/v2/internal/endpoint"
+	"github.com/mars-projects/kratos/v2/internal/endpoint"
 
-	"github.com/projects-mars/kratos/v2/internal/host"
-	"github.com/projects-mars/kratos/v2/log"
-	"github.com/projects-mars/kratos/v2/middleware"
-	"github.com/projects-mars/kratos/v2/transport"
+	"github.com/mars-projects/kratos/v2/internal/host"
+	"github.com/mars-projects/kratos/v2/log"
+	"github.com/mars-projects/kratos/v2/middleware"
+	"github.com/mars-projects/kratos/v2/transport"
 
 	"github.com/gorilla/mux"
 )

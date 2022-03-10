@@ -7,13 +7,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/projects-mars/kratos/v2/log"
+	"github.com/mars-projects/kratos/v2/log"
 
 	// init encoding
-	_ "github.com/projects-mars/kratos/v2/encoding/json"
-	_ "github.com/projects-mars/kratos/v2/encoding/proto"
-	_ "github.com/projects-mars/kratos/v2/encoding/xml"
-	_ "github.com/projects-mars/kratos/v2/encoding/yaml"
+	_ "github.com/mars-projects/kratos/v2/encoding/json"
+	_ "github.com/mars-projects/kratos/v2/encoding/proto"
+	_ "github.com/mars-projects/kratos/v2/encoding/xml"
+	_ "github.com/mars-projects/kratos/v2/encoding/yaml"
 )
 
 var (

@@ -5,10 +5,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/projects-mars/kratos/v2/errors"
-	"github.com/projects-mars/kratos/v2/metrics"
-	"github.com/projects-mars/kratos/v2/middleware"
-	"github.com/projects-mars/kratos/v2/transport"
+	"github.com/mars-projects/kratos/v2/errors"
+	"github.com/mars-projects/kratos/v2/metrics"
+	"github.com/mars-projects/kratos/v2/middleware"
+	"github.com/mars-projects/kratos/v2/transport"
 )
 
 // Option is metrics option.

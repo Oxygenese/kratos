@@ -5,8 +5,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/projects-mars/kratos/v2/encoding"
-	"github.com/projects-mars/kratos/v2/log"
+	"github.com/mars-projects/kratos/v2/encoding"
+	"github.com/mars-projects/kratos/v2/log"
 )
 
 // Decoder is config decoder.

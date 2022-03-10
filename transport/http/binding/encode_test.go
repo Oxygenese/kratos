@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/projects-mars/kratos/v2/internal/testdata/binding"
+	"github.com/mars-projects/kratos/v2/internal/testdata/binding"
 )
 
 func TestProtoPath(t *testing.T) {

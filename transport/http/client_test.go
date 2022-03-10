@@ -14,9 +14,9 @@ import (
 	"testing"
 	"time"
 
-	kratosErrors "github.com/projects-mars/kratos/v2/errors"
-	"github.com/projects-mars/kratos/v2/middleware"
-	"github.com/projects-mars/kratos/v2/registry"
+	kratosErrors "github.com/mars-projects/kratos/v2/errors"
+	"github.com/mars-projects/kratos/v2/middleware"
+	"github.com/mars-projects/kratos/v2/registry"
 )
 
 type mockRoundTripper struct{}
@@ -284,11 +284,11 @@ func TestNewClient(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	client, err := NewClient(context.Background(), WithDiscovery(&mockDiscovery{}), WithEndpoint("discovery:///projects-mars"))
+	client, err := NewClient(context.Background(), WithDiscovery(&mockDiscovery{}), WithEndpoint("discovery:///mars-projects"))
 	if err != nil {
 		t.Error(err)
 	}
-	_, err = NewClient(context.Background(), WithDiscovery(&mockDiscovery{}), WithEndpoint("discovery:///projects-mars"))
+	_, err = NewClient(context.Background(), WithDiscovery(&mockDiscovery{}), WithEndpoint("discovery:///mars-projects"))
 	if err != nil {
 		t.Error(err)
 	}
@@ -296,7 +296,7 @@ func TestNewClient(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	_, err = NewClient(context.Background(), WithDiscovery(&mockDiscovery{}), WithEndpoint("https://projects-mars.dev/"))
+	_, err = NewClient(context.Background(), WithDiscovery(&mockDiscovery{}), WithEndpoint("https://mars-projects.dev/"))
 	if err == nil {
 		t.Error("err should not be equal to nil")
 	}

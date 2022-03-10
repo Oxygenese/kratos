@@ -1,7 +1,7 @@
 package cron
 
 import (
-	"github.com/projects-mars/kratos/v2/log"
+	"github.com/mars-projects/kratos/v2/log"
 	"github.com/robfig/cron"
 )
 

@@ -4,8 +4,8 @@ import (
 	"context"
 	"sync"
 
-	"github.com/projects-mars/kratos/v2/selector"
-	"github.com/projects-mars/kratos/v2/selector/node/direct"
+	"github.com/mars-projects/kratos/v2/selector"
+	"github.com/mars-projects/kratos/v2/selector/node/direct"
 )
 
 const (

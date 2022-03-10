@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/projects-mars/kratos/v2/middleware"
-	"github.com/projects-mars/kratos/v2/transport/http/binding"
+	"github.com/mars-projects/kratos/v2/middleware"
+	"github.com/mars-projects/kratos/v2/transport/http/binding"
 )
 
 var _ Context = (*wrapper)(nil)

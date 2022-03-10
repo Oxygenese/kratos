@@ -11,11 +11,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/projects-mars/kratos/v2/errors"
-	pb "github.com/projects-mars/kratos/v2/internal/testdata/helloworld"
-	"github.com/projects-mars/kratos/v2/log"
-	"github.com/projects-mars/kratos/v2/middleware"
-	"github.com/projects-mars/kratos/v2/transport"
+	"github.com/mars-projects/kratos/v2/errors"
+	pb "github.com/mars-projects/kratos/v2/internal/testdata/helloworld"
+	"github.com/mars-projects/kratos/v2/log"
+	"github.com/mars-projects/kratos/v2/middleware"
+	"github.com/mars-projects/kratos/v2/transport"
 
 	"google.golang.org/grpc"
 )

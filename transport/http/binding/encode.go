@@ -6,7 +6,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/projects-mars/kratos/v2/encoding/form"
+	"github.com/mars-projects/kratos/v2/encoding/form"
 
 	"google.golang.org/protobuf/proto"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"

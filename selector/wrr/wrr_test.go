@@ -5,9 +5,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/projects-mars/kratos/v2/registry"
-	"github.com/projects-mars/kratos/v2/selector"
-	"github.com/projects-mars/kratos/v2/selector/filter"
+	"github.com/mars-projects/kratos/v2/registry"
+	"github.com/mars-projects/kratos/v2/selector"
+	"github.com/mars-projects/kratos/v2/selector/filter"
 )
 
 func TestWrr(t *testing.T) {

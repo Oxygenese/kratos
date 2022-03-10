@@ -6,8 +6,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/projects-mars/kratos/v2/config"
-	"github.com/projects-mars/kratos/v2/config/file"
+	"github.com/mars-projects/kratos/v2/config"
+	"github.com/mars-projects/kratos/v2/config/file"
 )
 
 const _testJSON = `

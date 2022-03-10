@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/projects-mars/kratos/v2/registry"
-	"github.com/projects-mars/kratos/v2/selector"
+	"github.com/mars-projects/kratos/v2/registry"
+	"github.com/mars-projects/kratos/v2/selector"
 )
 
 func TestDirect(t *testing.T) {

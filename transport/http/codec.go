@@ -4,9 +4,9 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/projects-mars/kratos/v2/encoding"
-	"github.com/projects-mars/kratos/v2/errors"
-	"github.com/projects-mars/kratos/v2/internal/httputil"
+	"github.com/mars-projects/kratos/v2/encoding"
+	"github.com/mars-projects/kratos/v2/errors"
+	"github.com/mars-projects/kratos/v2/internal/httputil"
 )
 
 // SupportPackageIsVersion1 These constants should not be referenced from any other code.
