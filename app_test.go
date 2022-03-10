@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/go-kratos/kratos/v2/registry"
-	"github.com/go-kratos/kratos/v2/transport/grpc"
-	"github.com/go-kratos/kratos/v2/transport/http"
+	"github.com/projects-mars/kratos/v2/registry"
+	"github.com/projects-mars/kratos/v2/transport/grpc"
+	"github.com/projects-mars/kratos/v2/transport/http"
 )
 
 type mockRegistry struct {
@@ -110,7 +110,7 @@ func TestApp_Endpoint(t *testing.T) {
 		{
 			id:       "1",
 			name:     "kratos-v1",
-			instance: &registry.ServiceInstance{Endpoints: []string{"https://go-kratos.dev", "localhost"}},
+			instance: &registry.ServiceInstance{Endpoints: []string{"https://projects-mars.dev", "localhost"}},
 			metadata: map[string]string{},
 			version:  "v1",
 			want: struct {
@@ -120,7 +120,7 @@ func TestApp_Endpoint(t *testing.T) {
 				endpoint []string
 				metadata map[string]string
 			}{
-				id: "1", version: "v1", name: "kratos-v1", endpoint: []string{"https://go-kratos.dev", "localhost"},
+				id: "1", version: "v1", name: "kratos-v1", endpoint: []string{"https://projects-mars.dev", "localhost"},
 				metadata: map[string]string{},
 			},
 		},
@@ -128,7 +128,7 @@ func TestApp_Endpoint(t *testing.T) {
 			id:       "2",
 			name:     "kratos-v2",
 			instance: &registry.ServiceInstance{Endpoints: []string{"test"}},
-			metadata: map[string]string{"kratos": "https://github.com/go-kratos/kratos"},
+			metadata: map[string]string{"kratos": "https://github.com/projects-mars/kratos"},
 			version:  "v2",
 			want: struct {
 				id       string
@@ -138,7 +138,7 @@ func TestApp_Endpoint(t *testing.T) {
 				metadata map[string]string
 			}{
 				id: "2", version: "v2", name: "kratos-v2", endpoint: []string{"test"},
-				metadata: map[string]string{"kratos": "https://github.com/go-kratos/kratos"},
+				metadata: map[string]string{"kratos": "https://github.com/projects-mars/kratos"},
 			},
 		},
 		{

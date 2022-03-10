@@ -2,15 +2,15 @@ package kratos
 
 import (
 	"context"
-	"github.com/go-kratos/kratos/v2/job"
-	"github.com/go-kratos/kratos/v2/queue"
+	"github.com/projects-mars/kratos/v2/job"
+	"github.com/projects-mars/kratos/v2/queue"
 	"net/url"
 	"os"
 	"time"
 
-	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-kratos/kratos/v2/registry"
-	"github.com/go-kratos/kratos/v2/transport"
+	"github.com/projects-mars/kratos/v2/log"
+	"github.com/projects-mars/kratos/v2/registry"
+	"github.com/projects-mars/kratos/v2/transport"
 )
 
 // Option is an application option.

@@ -5,7 +5,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/go-kratos/kratos/v2/selector"
+	"github.com/projects-mars/kratos/v2/selector"
 )
 
 const (

@@ -4,10 +4,8 @@ go 1.16
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.2.15
-	github.com/bsm/redislock v0.7.2 // indirect
 	github.com/emicklei/proto v1.9.1
 	github.com/fatih/color v1.13.0
-	github.com/rabbitmq/amqp091-go v1.3.0 // indirect
 	github.com/spf13/cobra v1.3.0
 	golang.org/x/mod v0.5.0
 )
