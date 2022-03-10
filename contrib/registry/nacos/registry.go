@@ -10,7 +10,7 @@ import (
 	"github.com/nacos-group/nacos-sdk-go/clients/naming_client"
 	"github.com/nacos-group/nacos-sdk-go/vo"
 
-	"github.com/go-kratos/kratos/v2/registry"
+	"github.com/mars-projects/kratos/v2/registry"
 )
 
 var (
