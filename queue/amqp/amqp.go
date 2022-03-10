@@ -3,7 +3,7 @@ package amqp
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/projects-mars/kratos/v2/queue"
+	"github.com/mars-projects/kratos/v2/queue"
 )
 
 func NewAmqp(uri, exchange string) queue.AdapterQueue {
