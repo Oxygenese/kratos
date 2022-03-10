@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	errorsPackage = protogen.GoImportPath("github.com/go-kratos/kratos/v2/errors")
+	errorsPackage = protogen.GoImportPath("github.com/mars-projects/kratos/v2/errors")
 	fmtPackage    = protogen.GoImportPath("fmt")
 )
 
